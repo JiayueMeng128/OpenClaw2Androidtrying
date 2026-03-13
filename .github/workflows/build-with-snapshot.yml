@@ -9,10 +9,16 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout code (with LFS)
+      - name: Checkout code
         uses: actions/checkout@v4
         with:
           lfs: true
+          fetch-depth: 0
+
+      - name: Install Git LFS and pull files
+        run: |
+          git lfs install
+          git lfs pull
 
       - name: Setup Node.js 22.22.1
         uses: actions/setup-node@v4
@@ -21,6 +27,11 @@ jobs:
 
       - name: Install pnpm
         run: npm install -g pnpm
+
+      - name: List files to verify snapshot exists
+        run: |
+          ls -la dist-bin/
+          file dist-bin/openclaw-core.snapshot || echo "Snapshot file not found!"
 
       - name: Install dependencies
         run: pnpm install
