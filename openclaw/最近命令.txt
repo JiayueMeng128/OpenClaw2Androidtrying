@@ -1,0 +1,10 @@
+  243  mkdir -p dist-bin
+  244  # 打包 Linux x64 版本（带 --build 确保能找到 Node 24）
+  245  nexe dist/index.js   --target linux-x64-24.11.0   --output dist-bin/openclaw-core   --resource "./node_modules/**/*"   --resource "./package.json"   --bundle   --build
+  246  # 如果需要打包 Windows 版本（在 Linux 下交叉编译较复杂，建议在 Windows 环境执行）
+  247  # 创建输出目录
+  248  mkdir -p dist-bin
+  249  # 打包 Linux x64，Node 22（不指定小版本，nexe 会自动选最新稳定版）
+  250  nexe dist/index.js   --target linux-x64-22   --output dist-bin/openclaw-core   --resource "./node_modules/**/*"   --resource "./package.json"   --bundle
+  251  history 1 > 最近命令.txt
+  252  history 10 > 最近命令.txt

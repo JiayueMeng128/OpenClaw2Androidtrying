@@ -1,0 +1,21 @@
+[package]
+name = "litebox_syscall_rewriter"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+anyhow = "1.0"
+clap = { version = "4.5.32", features = ["derive"] }
+iced-x86 = "1.21"
+memmap2 = "0.9"
+object = { version = "0.36.7", default-features = false, features = ["elf", "read", "std"] }
+thiserror = { version = "2.0.6", default-features = false }
+zerocopy = { version = "0.8", features = ["derive"] }
+
+[lints]
+workspace = true
+
+[dev-dependencies]
+insta = "1.42.2"
+similar = "2.7.0"
+tempfile = "3.19.1"
