@@ -1,0 +1,46 @@
+name: Build OpenClaw with Snapshot
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code (with LFS)
+        uses: actions/checkout@v4
+        with:
+          lfs: true
+
+      - name: Setup Node.js 22.22.1
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22.22.1
+
+      - name: Install pnpm
+        run: npm install -g pnpm
+
+      - name: Install dependencies
+        run: pnpm install
+
+      - name: Build core
+        run: pnpm build
+
+      - name: Package with nexe using snapshot
+        run: |
+          npx nexe dist/index.js \
+            --target linux-x64-22.22.1 \
+            --output openclaw-core \
+            --snapshot dist-bin/openclaw-core.snapshot \
+            --resource "./node_modules/**/*.{js,json,node}" \
+            --resource "./package.json" \
+            --bundle \
+            --temp /tmp/nexe-temp
+
+      - name: Upload final binary
+        uses: actions/upload-artifact@v4
+        with:
+          name: openclaw-core
+          path: openclaw-core
