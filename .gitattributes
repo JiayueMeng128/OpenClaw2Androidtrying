@@ -1,1 +1,2 @@
 openclaw/dist-bin/openclaw-core.snapshot filter=lfs diff=lfs merge=lfs -text
+dist-bin/openclaw-core.snapshot filter=lfs diff=lfs merge=lfs -text
